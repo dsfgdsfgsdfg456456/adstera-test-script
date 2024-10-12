@@ -1,37 +1,17 @@
-// index.js
+// api/redirect.js
 
-// Geo-Targeting with ip-api
-const fetch = require("node-fetch");
-
-const urlList = {
-    "US": "https://your-url-for-us.com",
-    "IN": "https://your-url-for-in.com",
-    "PK": "https://your-url-for-pk.com",
-    "default": "https://your-default-url.com"
-};
-
-// Fetch user IP and redirect based on country
 module.exports = async (req, res) => {
-    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    const geoUrl = `http://ip-api.com/json/${ip}`;
+    // Set the destination URL you want to redirect to
+    const destinationUrl = "https://decimalediblegoose.com/tt44e8dv?key=c5d48f83233bb1353e58c70af36708d6"; // Replace with your target URL
 
-    try {
-        const geoRes = await fetch(geoUrl);
-        const geoData = await geoRes.json();
-        const userCountry = geoData.countryCode || "default";
-        
-        // Set the URL to redirect based on country
-        const redirectUrl = urlList[userCountry] || urlList["default"];
-
-        // Set Chrome user-agent
-        res.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
-
-        // Perform the redirection
-        res.writeHead(302, { Location: redirectUrl });
-        res.end();
-    } catch (error) {
-        console.error("Error fetching geo data:", error);
-        res.writeHead(302, { Location: urlList["default"] });
-        res.end();
-    }
+    // Set the headers for the redirection
+    res.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
+    res.setHeader("Referer", "https://www.google.com/");
+    
+    // Redirect to the destination URL
+    res.writeHead(302, {
+        "Location": destinationUrl,
+        "X-Forwarded-For": "66.249.66.1" // IP range of Googlebot (appears US-based)
+    });
+    res.end();
 };
