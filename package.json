@@ -1,0 +1,12 @@
+{
+  "name": "geo-redirect",
+  "version": "1.0.0",
+  "description": "A script to redirect based on user location and show traffic as Chrome browser.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
